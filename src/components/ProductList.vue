@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters, mapActions} from 'vuex'
+	import {mapState, mapGetters, mapActions} from 'vuex'
   export default {
     data () {
       return {
@@ -26,24 +26,24 @@ import {mapState, mapGetters, mapActions} from 'vuex'
 
     computed: {
 			...mapState({
-				products: state => state.products
+				products: state => state.products.items
 			}),
 
-			...mapGetters({
+			...mapGetters('products', {
 				productsIsInStock: 'productsIsInStock'
 			})
     },
 
     methods: {
 			...mapActions({
-				fetchProducts: 'fetchProducts',
-				addProductToCart: 'addProductToCart'
+				fetchProducts: 'products/fetchProducts',
+				addProductToCart: 'cart/addProductToCart'
 			})
     },
 
     created () {
       this.loading = true
-      this.$store.dispatch('fetchProducts')
+      this.fetchProducts()
         .then(() => this.loading = false)
     }
   }
